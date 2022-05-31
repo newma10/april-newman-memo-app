@@ -38,6 +38,10 @@ test('should show a input with type checkbox', () => {
     expect(input.tagName).toBe('INPUT');
 })
 
+// test('should set "Finished" checkbox to true if checked during editing'), () => {
+//     render(<MemoInput />)
+// }
+
 test('should show a button with text "Submit"', () => {
     render(<MemoInput/>)
     const button = screen.getByText("Submit");
@@ -49,6 +53,7 @@ test('should run onSubmit prop when "Submit" button is clicked passing the user 
     render(<MemoInput onSubmit={_onSubmit}/>)
 
     const userInput = {
+        id: 1,
         title: 'my title',
         desc: 'my desc',
         date: '2022-02-02',

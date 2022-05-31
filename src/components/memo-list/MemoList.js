@@ -1,9 +1,5 @@
 import {Memo} from "../memo/Memo";
-
-
-// list.map((memoData) => {
-//     return <Memo memo={memoData}/>
-// })
+import {Accordion} from "react-bootstrap";
 
 export function MemoList({list, onEditSelect, onDelete, _Memo = Memo}) {
 
@@ -17,23 +13,43 @@ export function MemoList({list, onEditSelect, onDelete, _Memo = Memo}) {
     const finishedList = list.filter(m => m.finished)
 
     return <>
-        <h1>Pending</h1>
-        {
-            pendingList.sort(sortMemoList)
-            .map((memoData, idx) => <_Memo key={idx} memo={memoData} onEditSelect={onEditSelect} onDelete={onDelete}/>)
-        }
-        <h1>Finished</h1>
-        {
-            finishedList.sort(sortMemoList)
-                .map((memoData, idx) => <_Memo key={idx} memo={memoData} onEditSelect={onEditSelect} onDelete={onDelete}/>)
-        }
-
+        <Accordion defaultActiveKey={["0"]} alwaysOpen>
+            <Accordion.Item eventKey="0">
+                <Accordion.Header>Pending</Accordion.Header>
+                <Accordion.Body>
+                    {
+                        pendingList.sort(sortMemoList)
+                            .map((memoData, idx) => {
+                                return <div key={idx} className={'m-3'}>
+                                        <_Memo memo={memoData} onEditSelect={onEditSelect} onDelete={onDelete}/>
+                                    </div>
+                                }
+                            )
+                    }
+                </Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item eventKey="1">
+                <Accordion.Header>Finished</Accordion.Header>
+                <Accordion.Body>
+                    {
+                        finishedList.sort(sortMemoList)
+                            .map((memoData, idx) => {
+                                    return <div key={idx} className={'m-3'}>
+                                        <_Memo memo={memoData} onEditSelect={onEditSelect} onDelete={onDelete}/>
+                                    </div>
+                                }
+                            )
+                    }
+                </Accordion.Body>
+            </Accordion.Item>
+        </Accordion>
     </>
 }
 
+// .map will be looking for 'key' on the first element, which is now <div> instead of within <_Memo...>.
 
 // 1. Add Delete button to Memo.js
-// 2.
+// 2. Add onDelete to MemoList component since it's part of the chain up to App.js to tell the onDelete prop what function to execute.
 // 3. Create onDelete function in App.js. Add to the MemoList comp called in App.js
 // 4. Add onDelete prop to the MemoList component itself, since it's now been defined in App.js return.
 // 5. So now, whenever Memo component is rendered (as above), it will look to Memo.js to reference what should be executed by 'onDelete'.

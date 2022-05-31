@@ -57,7 +57,9 @@ function App(props) {
     }
 
     if (!isLoggedIn) {
-        return <_Login onSubmit={onLogin}/>
+        return <div className={'d-flex justify-content-center p-5'}>
+            <_Login onSubmit={onLogin}/>
+        </div>
     }
 
     if (selectedMemo) {
@@ -67,8 +69,10 @@ function App(props) {
     return <>
         <_MemoAdd onMemoAdd={onMemoAdd}/>
         <_MemoList list={memoList} onEditSelect={onEditSelect} onDelete={onDelete}/>
+
     </>
 }
+
 
 export default App;
 

@@ -1,0 +1,10 @@
+.memo-date {
+    float: right;
+}
+
+.memo-desc {
+    display: flex;
+    align-items: left;
+    justify-content: space-around;
+    padding-left: 1rem;
+}
