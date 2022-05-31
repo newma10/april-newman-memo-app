@@ -1,17 +1,28 @@
 import {useState} from "react";
+import {v4 as uuidv4} from 'uuid';
 
-export function MemoInput({onSubmit}) {
+export function MemoInput(props) {
 
-    const [formState, setFormState] = useState({
+    const emptyForm = {
+        id: uuidv4(),
         title: '',
         desc: '',
         date: new Date(),
         finished: false
-    });
+    };
+
+    const {
+        onSubmit,
+        memo = emptyForm
+    } = props
+
+    const [formState, setFormState] = useState(memo);
 
     function onFormSubmit(event) {
-        event.preventDefault()
-        onSubmit({...formState})
+        event.preventDefault();
+        console.log(formState);
+        onSubmit({...formState});
+        setFormState(emptyForm)
     }
 
     function onTitleChange(event) {
@@ -54,3 +65,6 @@ export function MemoInput({onSubmit}) {
         <button>Submit</button>
     </form>
 }
+
+//onSubmit line under onFormSubmit: //Where new memo is actually created. "Moment of creation", where 'id' needs to be added.
+// uuidv = imported f/npm packages online. Add here not above bc initial state is static, need new per memo addition.
