@@ -1,7 +1,13 @@
 import {Memo} from "../memo/Memo";
 import {Accordion} from "react-bootstrap";
+import {useSelector} from "react-redux";
 
-export function MemoList({list, onEditSelect, onDelete, _Memo = Memo}) {
+// USESELECTOR: 'state' here in the useSelector function is the current state, and we want it to return the current memoList, which is
+// then stores in the 'list' variable to be used and accessed elsewhere in this component.
+
+export function MemoList({onEditSelect, onDelete, _Memo = Memo}) {
+
+    const list = useSelector((state) => {return state.memoList})
 
     function sortMemoList(a, b) {
         if (a.title < b.title) return -1;

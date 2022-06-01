@@ -1,8 +1,17 @@
 import {Button, Card} from 'react-bootstrap';
 import {BsFillCheckCircleFill, BsFillCircleFill} from "react-icons/bs";
 import './Memo.css';
+import {useDispatch} from "react-redux";
+import {ON_MEMO_DELETE} from "../../modules/memos";
+import {ON_MEMO_SELECT} from "../../modules/memos";
 
-export function Memo({memo, onEditSelect, onDelete}) {
+//Need to talk to reducer? MUST use DISPATCH!  import, then use.
+// useDispatch() needs to be called, but MUST be stored in a variable (typically variable named 'dispatch'
+
+export function Memo({memo}) {
+
+    const dispatch = useDispatch();
+
     return <Card style={{ width: '18rem'}}>
         <Card.Header as="h5">
             <span className={'text-lg-start'}><h2>{memo.title}</h2></span>
@@ -13,8 +22,16 @@ export function Memo({memo, onEditSelect, onDelete}) {
         <div className={'p-3'}>{memo.desc}</div>
 
         <Card.Footer className={'d-flex justify-content-around'}>
-            <Button variant="outline-warning" onClick={() => onEditSelect(memo)}>Edit</Button>{' '}
-            <Button variant="outline-danger" onClick={() => onDelete(memo)}>Delete</Button>{' '}
+            <Button variant="outline-warning" onClick={() => dispatch({
+                type: ON_MEMO_SELECT,
+                value: memo})}>
+                Edit
+            </Button>{' '}
+            <Button variant="outline-danger" onClick={() => dispatch({
+                type: ON_MEMO_DELETE,
+                value: memo})}>
+                Delete
+            </Button>{' '}
         </Card.Footer>
     </Card>
 }
